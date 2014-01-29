@@ -52,21 +52,6 @@ namespace DiagnosticsGUI
             }
         }
 
-        private void versionTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-
-        }
-
         private void scanButton_Click(object sender, EventArgs e)
         {
             //Clear items before each scan
