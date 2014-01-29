@@ -133,15 +133,6 @@ namespace DiagnosticsGUI
             }
 
             //Check Visual Redist
-            //Causes nullpointer if run on system without VS2012. Why?
-
-            /*
-             * ACK 
-             * 
-             * JA VET INT
-             * KANSKE BÅTN
-             *
-             */
            using (RegistryKey visual_ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
                RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\DevDiv\VC\Servicing\11.0\RuntimeMinimum"))
            {
@@ -422,7 +413,7 @@ namespace DiagnosticsGUI
             //Download to \temp and run
             string tempPath = Path.GetTempPath();
             string downloadLocationVisual = String.Format(@"{0}\vcredist_x86.exe", tempPath);
-            webClient_visual.DownloadFile("http://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU3/vcredist_x86.exe", downloadLocationVisual);
+            webClient_visual.DownloadFile("http://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x86.exe", downloadLocationVisual);
             Process.Start(downloadLocationVisual);
 
         }

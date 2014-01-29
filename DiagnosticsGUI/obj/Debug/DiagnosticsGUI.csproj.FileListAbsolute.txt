@@ -21,3 +21,10 @@ F:\User Files\Programming\VS2012 - C# Projects\WindowsFormsApplication1\Diagnost
 F:\User Files\Programming\VS2012 - C# Projects\DiagnosticsGUI\DiagnosticsGUI\bin\Debug\DiagnosticsGUI.exe.config
 F:\User Files\Programming\VS2012 - C# Projects\DiagnosticsGUI\DiagnosticsGUI\obj\Debug\DiagnosticsGUI.exe
 F:\User Files\Programming\VS2012 - C# Projects\DiagnosticsGUI\DiagnosticsGUI\obj\Debug\DiagnosticsGUI.pdb
+F:\User Files\Programming\VS2012 - C# Projects\DiagnosticsGUI\DiagnosticsGUI\bin\Debug\DiagnosticsGUI.exe
+F:\User Files\Programming\VS2012 - C# Projects\DiagnosticsGUI\DiagnosticsGUI\bin\Debug\DiagnosticsGUI.pdb
+F:\User Files\Programming\VS2012 - C# Projects\DiagnosticsGUI\DiagnosticsGUI\obj\Debug\DiagnosticsGUI.csprojResolveAssemblyReference.cache
+F:\User Files\Programming\VS2012 - C# Projects\DiagnosticsGUI\DiagnosticsGUI\obj\Debug\DiagnosticsGUI.About.resources
+F:\User Files\Programming\VS2012 - C# Projects\DiagnosticsGUI\DiagnosticsGUI\obj\Debug\DiagnosticsGUI.Form1.resources
+F:\User Files\Programming\VS2012 - C# Projects\DiagnosticsGUI\DiagnosticsGUI\obj\Debug\DiagnosticsGUI.Properties.Resources.resources
+F:\User Files\Programming\VS2012 - C# Projects\DiagnosticsGUI\DiagnosticsGUI\obj\Debug\DiagnosticsGUI.csproj.GenerateResource.Cache
