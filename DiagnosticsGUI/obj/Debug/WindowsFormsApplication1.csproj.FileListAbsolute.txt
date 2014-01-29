@@ -1,0 +1,10 @@
+F:\User Files\Programming\VS2012 - C# Projects\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+F:\User Files\Programming\VS2012 - C# Projects\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+F:\User Files\Programming\VS2012 - C# Projects\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+F:\User Files\Programming\VS2012 - C# Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+F:\User Files\Programming\VS2012 - C# Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
+F:\User Files\Programming\VS2012 - C# Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+F:\User Files\Programming\VS2012 - C# Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+F:\User Files\Programming\VS2012 - C# Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+F:\User Files\Programming\VS2012 - C# Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+F:\User Files\Programming\VS2012 - C# Projects\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\DiagnosticsGUI.Form1.resources
