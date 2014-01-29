@@ -14,10 +14,11 @@ namespace DiagnosticsGUI
         public About()
         {
             InitializeComponent();
-            this.labelCopyright.Text = AssemblyCopyright;
+
             /*
             this.Text = String.Format("About {0}", AssemblyTitle);
             this.labelProductName.Text = AssemblyProduct;
+            this.labelCopyright.Text = AssemblyCopyright;
             this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
             this.labelCompanyName.Text = AssemblyCompany;
             this.textBoxDescription.Text = AssemblyDescription;
