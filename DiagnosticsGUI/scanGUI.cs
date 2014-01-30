@@ -52,6 +52,163 @@ namespace DiagnosticsGUI
             }
         }
 
+        //File integrity scanning function
+        private void ScanFiles(string skyrimPath)
+        {
+            
+
+                   // Total files of mod and booleans for determining if any mods are broken
+                   int TotalFiles = 13;
+                   bool modBroken = false;
+                   bool SKSEBroken = false;
+                   bool dragonBroken = false;
+
+                   //Define paths to mod files, excluding oblivion files and UI files
+                   string d3d9_dll = String.Format(@"{0}\d3d9.dll", skyrimPath);
+                   string GameAPI_dll = String.Format(@"{0}\Game.API.dll", skyrimPath);
+                   string GameHook_dll = String.Format(@"{0}\Game.Hook.dll", skyrimPath);
+                   string GameScript_dll = String.Format(@"{0}\Game.Script.dll", skyrimPath);
+                   string GameClient_dll = String.Format(@"{0}\Modules\Game.Client.dll", skyrimPath);
+                   string Lidgren_dll = String.Format(@"{0}\Lidgren.Network.dll", skyrimPath);
+                   string log4net_dll = String.Format(@"{0}\log4net.dll", skyrimPath);
+                   string MonoGame_dll = String.Format(@"{0}\MonoGame.Framework.dll", skyrimPath);
+                   string MyGUI_dll = String.Format(@"{0}\MyGUIEngine.dll", skyrimPath);
+                   string SkyrimScript_dll = String.Format(@"{0}\Skyrim.Script.dll", skyrimPath);
+                   string version_dll = String.Format(@"{0}\version.dll", skyrimPath);
+                   string resources_xml = String.Format(@"{0}\resources.xml", skyrimPath);
+
+                   if (!File.Exists(d3d9_dll))
+                   {
+                       TotalFiles = TotalFiles - 1;
+                       modBroken = true;
+                   }
+                   if (!File.Exists(GameAPI_dll))
+                   {
+                       TotalFiles = TotalFiles - 1;
+                       modBroken = true;
+                   }
+                   if (!File.Exists(GameClient_dll))
+                   {
+                       TotalFiles = TotalFiles - 1;
+                       modBroken = true;
+                   }
+                   if (!File.Exists(GameHook_dll))
+                   {
+                       TotalFiles = TotalFiles - 1;
+                       modBroken = true;
+                   }
+                   if (!File.Exists(GameScript_dll))
+                   {
+                       TotalFiles = TotalFiles - 1;
+                       modBroken = true;
+                   }
+                   if (!File.Exists(Lidgren_dll))
+                   {
+                       TotalFiles = TotalFiles - 1;
+                       modBroken = true;
+                   }
+                   if (!File.Exists(log4net_dll))
+                   {
+                       TotalFiles = TotalFiles - 1;
+                       modBroken = true;
+                   }
+                   if (!File.Exists(MonoGame_dll))
+                   {
+                       TotalFiles = TotalFiles - 1;
+                       modBroken = true;
+                   }
+                   if (!File.Exists(MyGUI_dll))
+                   {
+                       TotalFiles = TotalFiles - 1;
+                       modBroken = true;
+                   }
+                   if (!File.Exists(SkyrimScript_dll))
+                   {
+                       TotalFiles = TotalFiles - 1;
+                       modBroken = true;
+                   }
+                   if (!File.Exists(version_dll))
+                   {
+                       TotalFiles = TotalFiles - 1;
+                       modBroken = true;
+                   }
+                   if (!File.Exists(resources_xml))
+                   {
+                       TotalFiles = TotalFiles - 1;
+                       modBroken = true;
+                   }
+
+
+                   //Check file integrity of SKSE
+                   //Define paths to SKSE files
+                   string SKSELoader_exe = String.Format(@"{0}\skse_loader.exe", skyrimPath);
+                   if (!File.Exists(SKSELoader_exe))
+                   {
+                       TotalFiles = TotalFiles - 1;
+                       SKSEBroken = true;
+                       listAddItem("SKSE: ", "SKSE is not installed.");
+                   }
+                   else
+                   {
+                       listAddItem("SKSE: ", "SKSE is installed.");
+                   }
+
+
+                   //Check file integrity of ScriptDragon
+                   //Define paths to SD files
+
+                   string dragon_dll = String.Format(@"{0}\ScriptDragon.dll", skyrimPath);
+
+                   if (!File.Exists(dragon_dll))
+                   {
+                       TotalFiles = TotalFiles - 1;
+                       dragonBroken = true;
+                       listAddItem("ScriptDragon: ", "ScriptDragon not installed.");
+                   }
+                   else
+                   {
+                       listAddItem("ScriptDragon: ", "ScriptDragon is installed.");
+                   }
+
+                   //Create entry
+                   //if (TotalFiles > 22)
+                   if (TotalFiles < 13)
+                   {
+                       string modString = "";
+                       string dragonString = "";
+                       string SKSEString = "";
+
+                       if (modBroken == true)
+                       {
+                           modString = "Skyrim Online";
+                           repairInstallationButton.Enabled = true;
+                       }
+                       if (dragonBroken == true)
+                       {
+                           dragonString = "ScriptDragon";
+                           repairDragonButton.Enabled = true;
+                       }
+                       if (SKSEBroken == true)
+                       {
+                           SKSEString = "SKSE";
+                           repairSKSEButton.Enabled = true;
+                       }
+
+                       string affectedMods = String.Format("{0} {1} {2}", modString, dragonString, SKSEString);
+
+                       //calc number of OK files
+                       int nFiles = 13 - TotalFiles;
+                       string OKFiles = nFiles.ToString();
+
+                       string filesMissing = String.Format("Integrity check failed. Files missing: {0}. Affected mods: {1}", OKFiles, affectedMods);
+                       listAddItem("Mod Integrity: ", filesMissing);
+                   }
+                   else
+                   {
+                       listAddItem("Mod Integrity: ", "No files missing.");
+                   }
+        }
+
         private void scanButton_Click(object sender, EventArgs e)
         {
             //Clear items before each scan
@@ -148,218 +305,40 @@ namespace DiagnosticsGUI
            using (RegistryKey path_ndpkey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
                RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Wow6432Node\Bethesda Softworks\Skyrim\"))
            {
-               //Catch nullpointer
+               //Catch nullpointer or custom install directory
                if (path_ndpkey == null)
                {
-                   listAddItem("File Integrity Check: ", "Registry error! Is Skyrim installed on your system?");
-                   return;
+                   MessageBox.Show("No Skyrim installation found! Please select your installation manually.", "Path error!");
+
+                   using (FolderBrowserDialog skyrimFolder = new FolderBrowserDialog())
+                   {
+                       skyrimFolder.Description = "Please select your Skyrim installation folder.";
+                       skyrimFolder.ShowNewFolderButton = false;
+                       skyrimFolder.RootFolder = Environment.SpecialFolder.MyComputer;
+
+                       //Select folder from treeview
+                       if (skyrimFolder.ShowDialog() == DialogResult.OK)
+                       {
+                           string selectedFolder = skyrimFolder.SelectedPath;
+                           string fileTESV = String.Format(@"{0}\TESV.exe", selectedFolder);
+
+                           if (!File.Exists(fileTESV))
+                           {
+                               statusList.Items.Clear();
+                               DialogResult tryAgain = MessageBox.Show("TESV.exe not found! Please try again.");
+                           }
+                           else
+                           {
+                               string skyrimPath = skyrimFolder.SelectedPath;
+                               ScanFiles(skyrimPath);
+                           }
+                       }
+                   }
                }
                else
                {
-
-                   // Total files of mod and booleans for determining if any mods are broken
-
-                   //int TotalFiles = 22;
-                   int TotalFiles = 13;
-                   bool modBroken = false;
-                   bool SKSEBroken = false;
-                   bool dragonBroken = false;
-
                    string skyrimPath = (string)path_ndpkey.GetValue("Installed Path");
-
-
-                   //Define paths to mod files, excluding oblivion files and UI files
-                   string d3d9_dll = String.Format(@"{0}\d3d9.dll", skyrimPath);
-                   string GameAPI_dll = String.Format(@"{0}\Game.API.dll", skyrimPath);
-                   string GameHook_dll = String.Format(@"{0}\Game.Hook.dll", skyrimPath);
-                   string GameScript_dll = String.Format(@"{0}\Game.Script.dll", skyrimPath);
-                   string GameClient_dll = String.Format(@"{0}\Modules\Game.Client.dll", skyrimPath);
-                   string Lidgren_dll = String.Format(@"{0}\Lidgren.Network.dll", skyrimPath);
-                   string log4net_dll = String.Format(@"{0}\log4net.dll", skyrimPath);
-                   string MonoGame_dll = String.Format(@"{0}\MonoGame.Framework.dll", skyrimPath);
-                   string MyGUI_dll = String.Format(@"{0}\MyGUIEngine.dll", skyrimPath);
-                   string SkyrimScript_dll = String.Format(@"{0}\Skyrim.Script.dll", skyrimPath);
-                   string version_dll = String.Format(@"{0}\version.dll", skyrimPath);
-                   string resources_xml = String.Format(@"{0}\resources.xml", skyrimPath);
-
-                   if (!File.Exists(d3d9_dll))
-                   {
-                       TotalFiles = TotalFiles - 1;
-                       modBroken = true;
-                   }
-                   if (!File.Exists(GameAPI_dll))
-                   {
-                       TotalFiles = TotalFiles - 1;
-                       modBroken = true;
-                   }
-                   if (!File.Exists(GameClient_dll))
-                   {
-                       TotalFiles = TotalFiles - 1;
-                       modBroken = true;
-                   }
-                   if (!File.Exists(GameHook_dll))
-                   {
-                       TotalFiles = TotalFiles - 1;
-                       modBroken = true;
-                   }
-                   if (!File.Exists(GameScript_dll))
-                   {
-                       TotalFiles = TotalFiles - 1;
-                       modBroken = true;
-                   }
-                   if (!File.Exists(Lidgren_dll))
-                   {
-                       TotalFiles = TotalFiles - 1;
-                       modBroken = true;
-                   }
-                   if (!File.Exists(log4net_dll))
-                   {
-                       TotalFiles = TotalFiles - 1;
-                       modBroken = true;
-                   }
-                   if (!File.Exists(MonoGame_dll))
-                   {
-                       TotalFiles = TotalFiles - 1;
-                       modBroken = true;
-                   }
-                   if (!File.Exists(MyGUI_dll))
-                   {
-                       TotalFiles = TotalFiles - 1;
-                       modBroken = true;
-                   }
-                   if (!File.Exists(SkyrimScript_dll))
-                   {
-                       TotalFiles = TotalFiles - 1;
-                       modBroken = true;
-                   }
-                   if (!File.Exists(version_dll))
-                   {
-                       TotalFiles = TotalFiles - 1;
-                       modBroken = true;
-                   }
-                   if (!File.Exists(resources_xml))
-                   {
-                       TotalFiles = TotalFiles - 1;
-                       modBroken = true;
-                   }
-
-
-                   //Check file integrity of SKSE
-                   //Define paths to SKSE files
-                   string SKSELoader_exe = String.Format(@"{0}\skse_loader.exe", skyrimPath);
-                   if (!File.Exists(SKSELoader_exe))
-                   {
-                       TotalFiles = TotalFiles - 1;
-                       SKSEBroken = true;
-                       listAddItem("SKSE: ", "SKSE is not installed.");
-                   }
-                   else
-                   {
-                       listAddItem("SKSE: ", "SKSE is installed.");
-                   }
-
-
-                   //Check file integrity of ScriptDragon
-                   //Define paths to SD files
-
-                   /*
-                   string horse_asi = String.Format(@"{0}\horsespawner.asi", skyrimPath);
-                   string horse_ini = String.Format(@"{0}\horsespawner.ini", skyrimPath);             
-                   string trainer_asi = String.Format(@"{0}\trainer.asi", skyrimPath);
-                   string trainer_ini = String.Format(@"{0}\trainer.ini", skyrimPath);
-                   string undress_asi = String.Format(@"{0}\undress.asi", skyrimPath);
-                   string undress_ini = String.Format(@"{0}\undress.ini", skyrimPath);
-                   string weather_asi = String.Format(@"{0}\weather.asi", skyrimPath);
-                   string weather_ini = String.Format(@"{0}\weather.ini", skyrimPath);
-                    */
-
-                   string dragon_dll = String.Format(@"{0}\ScriptDragon.dll", skyrimPath);
-
-
-                   /*              if (!File.Exists(horse_asi))
-                                 {
-                                     TotalFiles = TotalFiles - 1;
-                                 }
-                                 if (!File.Exists(horse_ini))
-                                 {
-                                     TotalFiles = TotalFiles - 1;
-                                 }
-                                 if (!File.Exists(trainer_asi))
-                                 {
-                                     TotalFiles = TotalFiles - 1;
-                                 }
-                                 if (!File.Exists(trainer_ini))
-                                 {
-                                     TotalFiles = TotalFiles - 1;
-                                 }
-                                 if (!File.Exists(undress_asi))
-                                 {
-                                     TotalFiles = TotalFiles - 1;
-                                 }
-                                 if (!File.Exists(undress_ini))
-                                 {
-                                     TotalFiles = TotalFiles - 1;
-                                 }
-                                 if (!File.Exists(weather_asi))
-                                 {
-                                     TotalFiles = TotalFiles - 1;
-                                 }
-                                 if (!File.Exists(weather_ini))
-                                 {
-                                     TotalFiles = TotalFiles - 1;
-                                 }
-                  */
-
-                   if (!File.Exists(dragon_dll))
-                   {
-                       TotalFiles = TotalFiles - 1;
-                       dragonBroken = true;
-                       listAddItem("ScriptDragon: ", "ScriptDragon not installed.");
-                   }
-                   else
-                   {
-                       listAddItem("ScriptDragon: ", "ScriptDragon is installed.");
-                   }
-
-                   //Create entry
-                   //if (TotalFiles > 22)
-                   if (TotalFiles < 13)
-                   {
-                       string modString = "";
-                       string dragonString = "";
-                       string SKSEString = "";
-
-                       if (modBroken == true)
-                       {
-                           modString = "Skyrim Online";
-                           repairInstallationButton.Enabled = true;
-                       }
-                       if (dragonBroken == true)
-                       {
-                           dragonString = "ScriptDragon";
-                           repairDragonButton.Enabled = true;
-                       }
-                       if (SKSEBroken == true)
-                       {
-                           SKSEString = "SKSE";
-                           repairSKSEButton.Enabled = true;
-                       }
-
-                       string affectedMods = String.Format("{0} {1} {2}", modString, dragonString, SKSEString);
-
-                       //calc number of OK files
-                       int nFiles = 13 - TotalFiles;
-                       string OKFiles = nFiles.ToString();
-
-                       string filesMissing = String.Format("Integrity check failed. Files missing: {0}. Affected mods: {1}", OKFiles, affectedMods);
-                       listAddItem("Mod Integrity: ", filesMissing);
-                   }
-                   else
-                   {
-                       listAddItem("Mod Integrity: ", "No files missing.");
-
-
-                   }
+                   ScanFiles(skyrimPath);
                }
            }
         }
