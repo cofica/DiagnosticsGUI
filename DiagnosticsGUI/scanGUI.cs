@@ -231,7 +231,8 @@ namespace DiagnosticsGUI
                         // .NET 4.5 release data
                         if (releaseKey == 378389)
                         {
-                            listAddItem(".NET Status: ", ".NET 4.5 is installed.");
+                            listAddItem(".NET Status: ", ".NET 4.5 is installed. You should upgrade to .NET 4.5.1 - this is mandatory on Win8.");
+                            dotNETinstallButton.Enabled = true;
                         }
                         // .NET 4.5.1 release data
                         if (releaseKey == 378758)
@@ -356,13 +357,15 @@ namespace DiagnosticsGUI
 
         private void dotNETinstallButton_Click(object sender, EventArgs e)
         {
+    
+            //Download to \temp and run
             WebClient webClient_dotNET = new WebClient();
 
-            //Download to \temp and run
             string tempPath = Path.GetTempPath();
-            string downloadLocationdotNET = String.Format(@"{0}\vcredist_x86.exe", tempPath);
-            webClient_dotNET.DownloadFile("http://download.microsoft.com/download/B/A/4/BA4A7E71-2906-4B2D-A0E1-80CF16844F5F/dotNetFx45_Full_setup.exe", downloadLocationdotNET);
+            string downloadLocationdotNET = String.Format(@"{0}\dotNET.exe", tempPath);
+            webClient_dotNET.DownloadFile("http://download.microsoft.com/download/1/6/7/167F0D79-9317-48AE-AEDB-17120579F8E2/NDP451-KB2858728-x86-x64-AllOS-ENU.exe", downloadLocationdotNET);
             Process.Start(downloadLocationdotNET);
+
         }
 
         private void statusList_SelectedIndexChanged(object sender, EventArgs e)
